@@ -1,0 +1,565 @@
+/* ===========================
+   Budget Tracker - style.css
+   Mobile PWA Edition
+=========================== */
+
+:root{
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --primary:#22c55e;
+    --primary-dark:#16a34a;
+    --danger:#ef4444;
+    --text:#1f2937;
+    --subtext:#6b7280;
+    --border:#e5e7eb;
+    --shadow:0 8px 24px rgba(0,0,0,.07);
+}
+
+body.dark{
+    --bg:#0f172a;
+    --card:#1e293b;
+    --primary:#22c55e;
+    --primary-dark:#16a34a;
+    --danger:#ef4444;
+    --text:#f8fafc;
+    --subtext:#cbd5e1;
+    --border:#334155;
+    --shadow:0 8px 28px rgba(0,0,0,.30);
+}
+
+
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    transition:background .3s,color .3s;
+
+    /* Prevent sideways scrolling */
+    overflow-x:hidden;
+
+    /* Better mobile scrolling */
+    -webkit-overflow-scrolling:touch;
+
+    /* Standalone app safe area */
+    padding-top:env(safe-area-inset-top);
+    padding-bottom:env(safe-area-inset-bottom);
+}
+
+
+/* ===========================
+   CONTAINER
+=========================== */
+
+.container{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+
+    padding:
+        20px
+        max(20px, env(safe-area-inset-right))
+        30px
+        max(20px, env(safe-area-inset-left));
+}
+
+
+/* ===========================
+   HEADER
+=========================== */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+header h1{
+    font-size:28px;
+    font-weight:700;
+    line-height:1.2;
+}
+
+header p{
+    margin-top:4px;
+    color:var(--subtext);
+    font-size:13px;
+}
+
+
+/* Theme button */
+
+#themeToggle{
+    flex-shrink:0;
+
+    width:48px;
+    height:48px;
+
+    border:none;
+    border-radius:50%;
+
+    cursor:pointer;
+
+    background:var(--card);
+    color:var(--text);
+
+    box-shadow:var(--shadow);
+
+    font-size:20px;
+
+    transition:
+        transform .2s,
+        background .3s;
+}
+
+#themeToggle:active{
+    transform:scale(.90);
+}
+
+
+/* ===========================
+   INSTALL APP BUTTON
+=========================== */
+
+.install-btn{
+    width:100%;
+
+    padding:14px 18px;
+
+    margin-bottom:20px;
+
+    border:none;
+    border-radius:14px;
+
+    background:var(--primary);
+    color:white;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 6px 15px rgba(34,197,94,.25);
+
+    transition:
+        transform .2s,
+        background .2s;
+}
+
+.install-btn:hover{
+    background:var(--primary-dark);
+}
+
+.install-btn:active{
+    transform:scale(.98);
+}
+
+
+/* ===========================
+   DASHBOARD
+=========================== */
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+.card{
+    background:var(--card);
+
+    padding:20px;
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+
+    transition:
+        transform .2s,
+        background .3s;
+}
+
+.card:active{
+    transform:scale(.98);
+}
+
+.card h3{
+    color:var(--subtext);
+
+    font-size:14px;
+    font-weight:500;
+
+    margin-bottom:8px;
+}
+
+.card h2{
+    font-size:27px;
+    font-weight:700;
+
+    word-break:break-word;
+}
+
+.income{
+    border-left:6px solid var(--primary);
+}
+
+.expense{
+    border-left:6px solid var(--danger);
+}
+
+.balance{
+    border-left:6px solid #3b82f6;
+}
+
+
+/* ===========================
+   ADD TRANSACTION
+=========================== */
+
+.add-transaction{
+    background:var(--card);
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+
+    padding:20px;
+
+    margin-bottom:20px;
+}
+
+.add-transaction h2{
+    margin-bottom:18px;
+
+    font-size:20px;
+}
+
+
+#transactionForm{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+}
+
+
+#transactionForm input,
+#transactionForm select{
+    width:100%;
+
+    min-height:50px;
+
+    padding:13px 14px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:
+        border .2s,
+        box-shadow .2s;
+}
+
+#transactionForm input:focus,
+#transactionForm select:focus{
+    border-color:var(--primary);
+
+    box-shadow:
+        0 0 0 3px rgba(34,197,94,.12);
+}
+
+
+#transactionForm button{
+    grid-column:span 2;
+
+    min-height:52px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-size:16px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s,
+        background .2s;
+}
+
+#transactionForm button:hover{
+    background:var(--primary-dark);
+}
+
+#transactionForm button:active{
+    transform:scale(.98);
+}
+
+
+/* ===========================
+   FILTERS
+=========================== */
+
+.filters{
+    display:flex;
+
+    gap:12px;
+
+    margin-bottom:20px;
+}
+
+.filters input{
+    flex:1;
+
+    min-height:48px;
+
+    padding:13px 14px;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--text);
+
+    font-size:14px;
+
+    outline:none;
+}
+
+.filters input:focus{
+    border-color:var(--primary);
+
+    box-shadow:
+        0 0 0 3px rgba(34,197,94,.12);
+}
+
+
+/* ===========================
+   CHART
+=========================== */
+
+.chart-card{
+    background:var(--card);
+
+    padding:20px;
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:20px;
+}
+
+.chart-card h3{
+    margin-bottom:20px;
+
+    font-size:18px;
+}
+
+canvas{
+    width:100%!important;
+
+    max-height:350px;
+}
+
+
+/* ===========================
+   HISTORY
+=========================== */
+
+.history{
+    background:var(--card);
+
+    border-radius:18px;
+
+    padding:20px;
+
+    box-shadow:var(--shadow);
+}
+
+.history-header{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:20px;
+
+    gap:10px;
+}
+
+.history-header h2{
+    font-size:20px;
+}
+
+.actions{
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+.actions button{
+    border:none;
+
+    min-height:42px;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    background:var(--primary);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:13px;
+    font-weight:500;
+
+    transition:
+        transform .2
+
+  /* ===========================
+   TRANSACTION TYPE SELECTOR
+=========================== */
+
+.type-selector{
+    grid-column:span 2;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+}
+
+.type-option{
+    min-height:52px;
+
+    border:2px solid var(--border);
+
+    border-radius:14px;
+
+    background:var(--card);
+
+    color:var(--subtext);
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:
+        .2s ease;
+
+    -webkit-tap-highlight-color:transparent;
+}
+
+.type-option:active{
+    transform:scale(.97);
+}
+
+
+/* Income selected */
+
+.type-option[data-type="income"].active{
+    background:rgba(34,197,94,.12);
+
+    border-color:var(--primary);
+
+    color:var(--primary);
+}
+
+
+/* Expense selected */
+
+.type-option[data-type="expense"].active{
+    background:rgba(239,68,68,.12);
+
+    border-color:var(--danger);
+
+    color:var(--danger);
+}
+
+
+/* ===========================
+   CATEGORY SELECT
+=========================== */
+
+#category{
+    appearance:none;
+
+    -webkit-appearance:none;
+
+    cursor:pointer;
+
+    font-weight:500;
+
+    background-image:
+        linear-gradient(45deg,transparent 50%,var(--subtext) 50%),
+        linear-gradient(135deg,var(--subtext) 50%,transparent 50%);
+
+    background-position:
+        calc(100% - 18px) 22px,
+        calc(100% - 13px) 22px;
+
+    background-size:
+        5px 5px,
+        5px 5px;
+
+    background-repeat:no-repeat;
+
+    padding-right:40px !important;
+}
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .type-selector{
+        grid-column:span 1;
+    }
+
+}

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- =========================
+         BASIC SETTINGS
+    ========================== -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>Budget Tracker</title>
+
+
+    <!-- =========================
+         PWA SETTINGS
+    ========================== -->
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta
+        name="theme-color"
+        content="#22c55e"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="default"
+    >
+
+
+    <!-- =========================
+         STYLES
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- Google Font -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================
+         CHART.JS
+    ========================== -->
+
+    <script src="chart.umd.js"></script>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+        <div class="header-title">
+
+            <h1>
+                💰 Budget Tracker
+            </h1>
+
+            <p>
+                Manage your money easily
+            </p>
+
+        </div>
+
+
+        <button
+            id="themeToggle"
+            aria-label="Toggle dark mode"
+            type="button"
+        >
+            🌙
+        </button>
+
+    </header>
+
+
+    <!-- =========================
+         INSTALL APP
+    ========================== -->
+
+    <button
+        id="installBtn"
+        class="install-btn"
+        type="button"
+        style="display:none;"
+    >
+        📲 Install App
+    </button>
+
+
+    <!-- =========================
+         DASHBOARD
+    ========================== -->
+
+    <section class="dashboard">
+
+
+        <!-- Income -->
+
+        <div class="card income">
+
+            <h3>
+                Total Income
+            </h3>
+
+            <h2 id="income">
+                ₱0.00
+            </h2>
+
+        </div>
+
+
+        <!-- Expenses -->
+
+        <div class="card expense">
+
+            <h3>
+                Total Expenses
+            </h3>
+
+            <h2 id="expense">
+                ₱0.00
+            </h2>
+
+        </div>
+
+
+        <!-- Balance -->
+
+        <div class="card balance">
+
+            <h3>
+                Balance
+            </h3>
+
+            <h2 id="balance">
+                ₱0.00
+            </h2>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ADD TRANSACTION
+    ========================== -->
+
+    <section class="add-transaction">
+
+        <h2>
+            Add Transaction
+        </h2>
+
+
+        <form id="transactionForm">
+
+
+            <!-- Description -->
+
+            <input
+                type="text"
+                id="description"
+                placeholder="📝 Description"
+                autocomplete="off"
+                required
+            >
+
+
+            <!-- Amount -->
+
+            <input
+                type="number"
+                id="amount"
+                placeholder="₱ Amount"
+                min="0"
+                step="0.01"
+                inputmode="decimal"
+                required
+            >
+
+
+            <!-- =========================
+                 INCOME / EXPENSE
+            ========================== -->
+
+            <div class="type-selector">
+
+
+                <button
+                    type="button"
+                    class="type-option active"
+                    data-type="income"
+                >
+                    💰 Income
+                </button>
+
+
+                <button
+                    type="button"
+                    class="type-option"
+                    data-type="expense"
+                >
+                    💸 Expense
+                </button>
+
+
+            </div>
+
+
+            <!-- Hidden value used by JavaScript -->
+
+            <input
+                type="hidden"
+                id="type"
+                value="income"
+            >
+
+
+            <!-- =========================
+                 CATEGORY
+            ========================== -->
+
+            <select id="category">
+
+                <option value="Salary">
+                    💼 Salary
+                </option>
+
+                <option value="Food">
+                    🍔 Food
+                </option>
+
+                <option value="Transportation">
+                    🚗 Transportation
+                </option>
+
+                <option value="Bills">
+                    🧾 Bills
+                </option>
+
+                <option value="Shopping">
+                    🛒 Shopping
+                </option>
+
+                <option value="Entertainment">
+                    🎮 Entertainment
+                </option>
+
+                <option value="Savings">
+                    🏦 Savings
+                </option>
+
+                <option value="Health">
+                    ❤️ Health
+                </option>
+
+                <option value="Budget">
+                    📊 Budget
+                </option>
+
+                <option value="Others">
+                    📦 Others
+                </option>
+
+            </select>
+
+
+            <!-- =========================
+                 DATE
+            ========================== -->
+
+            <input
+                type="date"
+                id="date"
+            >
+
+
+            <!-- =========================
+                 SUBMIT
+            ========================== -->
+
+            <button
+                type="submit"
+            >
+                ➕ Add Transaction
+            </button>
+
+
+        </form>
+
+    </section>
+
+
+    <!-- =========================
+         FILTERS
+    ========================== -->
+
+    <section class="filters">
+
+
+        <!-- Search -->
+
+        <input
+            type="text"
+            id="search"
+            placeholder="🔍 Search transactions..."
+            autocomplete="off"
+        >
+
+
+        <!-- Month -->
+
+        <input
+            type="month"
+            id="monthFilter"
+        >
+
+
+    </section>
+
+
+    <!-- =========================
+         CHART
+    ========================== -->
+
+    <section class="charts">
+
+        <div class="chart-card">
+
+            <h3>
+                📊 Expense by Category
+            </h3>
+
+            <canvas
+                id="expenseChart"
+            ></canvas>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         TRANSACTION HISTORY
+    ========================== -->
+
+    <section class="history">
+
+
+        <div class="history-header">
+
+
+            <h2>
+                Transactions
+            </h2>
+
+
+            <div class="actions">
+
+
+                <!-- Export -->
+
+                <button
+                    id="exportBtn"
+                    type="button"
+                >
+                    📤 Export CSV
+                </button>
+
+
+                <!-- Import -->
+
+                <button
+                    id="importBtn"
+                    type="button"
+                >
+                    📥 Import
+                </button>
+
+
+                <!-- Hidden file input -->
+
+                <input
+                    type="file"
+                    id="importFile"
+                    accept=".csv"
+                    hidden
+                >
+
+
+            </div>
+
+        </div>
+
+
+        <!-- Transactions generated by JavaScript -->
+
+        <div id="transactionList">
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+<!-- =========================
+     MAIN JAVASCRIPT
+========================== -->
+
+<script src="script.js"></scrip>
+
+
+<!-- =========================
+     SERVICE WORKER
+========================== -->
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", function () {
+
+        navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(function () {
+
+                console.log(
+                    "Service Worker registered successfully."
+                );
+
+            })
+            .catch(function (error) {
+
+                console.error(
+                    "Service Worker registration failed:",
+                    error
+                );
+
+            });
+
+    });
+
+}
+
+</script>
+
+
+<!-- =========================
+     INCOME / EXPENSE SELECTOR
+========================== -->
+
+<script>
+
+const typeButtons =
+    document.querySelectorAll(".type-option");
+
+const typeInput =
+    document.getElementById("type");
+
+
+typeButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        const selectedType =
+            button.dataset.type;
+
+
+        /* Update hidden input */
+
+        typeInput.value =
+            selectedType;
+
+
+        /* Remove active state */
+
+        typeButtons.forEach(function (btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+
+        /* Activate selected button */
+
+        button.classList.add("active");
+
+    });
+
+});
+
+</script>
+
+
+</body>
+
+</html>
